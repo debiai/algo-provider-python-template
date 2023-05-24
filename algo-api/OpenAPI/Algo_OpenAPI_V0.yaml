@@ -1,0 +1,344 @@
+openapi: 3.0.0
+info:
+  title: Algo API
+  version: 0.0.0
+  description: This API describe what the endpoints a service that want to be an algo-provider must implement
+  contact:
+    name: Tom Mansion
+    email: tom.mansion@irt-systemx.fr
+
+tags:
+  - name: Algorithms
+paths:
+  /algorithms:
+    get:
+      description: Get the list of algorithms that this service can provide
+      operationId: algorithms.algorithms.get_algorithms
+      tags:
+        - Algorithms
+      responses:
+        "200":
+          description: The list of algorithms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Algorithm"
+
+  /algorithms/{algorithmId}/run:
+    post:
+      description: Run an algorithm
+      operationId: algorithms.algorithms.use_algorithm
+      tags:
+        - Algorithms
+      parameters:
+        - name: algorithmId
+          in: path
+          description: The id of the algorithm to run
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The inputs of the algorithm
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - inputs
+              properties:
+                inputs:
+                  type: array
+                  description: The inputs of the algorithm
+                  items:
+                    oneOf:
+                      - $ref: "#/components/schemas/ValueString"
+                      - $ref: "#/components/schemas/ValueNumber"
+                      - $ref: "#/components/schemas/ValueBoolean"
+                      - $ref: "#/components/schemas/ValueArray"
+
+      responses:
+        "200":
+          description: The outputs of the algorithm
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - outputs
+                properties:
+                  outputs:
+                    type: array
+                    description: The results of the algorithm
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/ValueString"
+                        - $ref: "#/components/schemas/ValueNumber"
+                        - $ref: "#/components/schemas/ValueBoolean"
+                        - $ref: "#/components/schemas/ValueArray"
+        "400":
+          description: The inputs are not valid
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "The inputs are not valid"
+
+components:
+  schemas:
+    Algorithm:
+      type: object
+      description: Informations about an algorithm
+      required:
+        - id
+        - version
+        - inputs
+        - outputs
+      properties:
+        id:
+          type: string
+          description: The id of the algorithm, must be unique, will be used to identify the algorithm
+          example: "my-algorithm-01"
+        name:
+          type: string
+          description: The name of the algorithm
+          example: "My algorithm 01"
+        description:
+          type: string
+          description: The description of the algorithm
+          example: "This algorithm is used to do something"
+        tags:
+          type: array
+          description: The list of tags of the algorithm
+          items:
+            type: string
+          example: ["tag1", "tag2"]
+        author:
+          type: string
+          description: The author of the algorithm
+          example: "Ada Lovelace"
+        creationDate:
+          type: string
+          description: The creation date of the algorithm, ISO 8601 format, YYYY-MM-DD
+          example: "2023-01-01"
+          format: date
+        updateDate:
+          type: string
+          description: The last update date of the algorithm, ISO 8601 format, YYYY-MM-DD
+          example: "2023-03-20"
+          format: date
+          nullable: true
+        version:
+          type: string
+          description: The version of the algorithm
+          example: "0.1.0"
+        inputs:
+          type: array
+          description: The list of inputs of the algorithm
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/ValueInformationString"
+              - $ref: "#/components/schemas/ValueInformationNumber"
+              - $ref: "#/components/schemas/ValueInformationBoolean"
+              - $ref: "#/components/schemas/ValueInformationArray"
+        outputs:
+          type: array
+          description: The list of outputs of the algorithm
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/ValueInformationString"
+              - $ref: "#/components/schemas/ValueInformationNumber"
+              - $ref: "#/components/schemas/ValueInformationBoolean"
+              - $ref: "#/components/schemas/ValueInformationArray"
+
+    # Get algorithm Input and output informations
+    DataValueInformation:
+      type: object
+      description: Informations about an input or an output value of an algorithm
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+          description: The name of the input or output, must be unique, will be used to identify the input or output
+          example: "my_data_01"
+        type:
+          type: string
+          description: The type of the input or output, only string, number, boolean and array are supported
+          example: "string"
+          enum:
+            - string
+            - number
+            - boolean
+            - array
+        description:
+          type: string
+          description: The description of the input or output
+          example: "This data is used to do something"
+
+    ValueInformationString:
+      allOf:
+        - $ref: "#/components/schemas/DataValueInformation"
+        - type: object
+          description: A string value
+          properties:
+            type:
+              type: string
+              example: "string"
+              enum:
+                - string
+
+            availableValues:
+              type: array
+              description: The list of available values for this input
+              items:
+                type: string
+              example: ["my value", "my other value"]
+
+            default:
+              type: string
+              description: The default value for this input
+              example: "my value"
+
+    ValueInformationNumber:
+      allOf:
+        - $ref: "#/components/schemas/DataValueInformation"
+        - type: object
+          description: A number, float or integer
+          properties:
+            type:
+              type: string
+              example: "number"
+              enum:
+                - number
+
+            availableValues:
+              type: array
+              description: The list of available values for this input
+              items:
+                type: number
+              example: [1, 2, 3]
+
+            min:
+              type: number
+              description: The minimum value for this input
+              example: 0
+
+            max:
+              type: number
+              description: The maximum value for this input
+              example: 10
+
+            default:
+              type: number
+              description: The default value for this input
+              example: 5
+
+    ValueInformationBoolean:
+      allOf:
+        - $ref: "#/components/schemas/DataValueInformation"
+        - type: object
+          description: A boolean value
+          properties:
+            type:
+              type: string
+              example: "boolean"
+              enum:
+                - boolean
+
+            default:
+              type: boolean
+              description: The default value for this input
+              example: true
+
+    ValueInformationArray:
+      allOf:
+        - $ref: "#/components/schemas/DataValueInformation"
+        - type: object
+          description: An array of values
+          required:
+            - arrayType
+          properties:
+            type:
+              type: string
+              example: "array"
+              enum:
+                - array
+
+            arrayType:
+              type: string
+              description: Specify type of the array, only string, number and boolean supported
+              example: "string"
+              enum:
+                - string
+                - number
+                - boolean
+
+            lengthMin:
+              type: number
+              description: The minimum length of the array
+              example: 0
+
+            lengthMax:
+              type: number
+              description: The maximum length of the array
+              example: 10
+
+    # Use algorithm Input and output informations
+    DataValue:
+      type: object
+      description: A value of an input or an output of an algorithm
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+          description: The name of the input or output, must be unique, match the name of the input or output of the algorithm
+          example: "my_data_01"
+        value:
+          description: The value of the input or output, must match the type of the input or output of the algorithm
+
+    ValueString:
+      allOf:
+        - $ref: "#/components/schemas/DataValue"
+        - type: object
+          description: A string value
+          properties:
+            value:
+              type: string
+              example: "my value"
+
+    ValueNumber:
+      allOf:
+        - $ref: "#/components/schemas/DataValue"
+        - type: object
+          description: A number, float or integer
+          properties:
+            value:
+              type: number
+              example: 2
+
+    ValueBoolean:
+      allOf:
+        - $ref: "#/components/schemas/DataValue"
+        - type: object
+          description: A boolean value
+          properties:
+            value:
+              type: boolean
+              example: true
+
+    ValueArray:
+      allOf:
+        - $ref: "#/components/schemas/DataValue"
+        - type: object
+          description: An array of values
+          properties:
+            value:
+              type: array
+              description: A list of value that is an input or an output of the algorithm
+              example: [1, 2, 3]
