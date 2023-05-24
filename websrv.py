@@ -27,7 +27,11 @@ CORS(app.app)
 
 if __name__ == "__main__":
     # Run the service
-    print("================ My Algo Service " + get_app_version() + " ====================")
+    print(
+        "================ My Algo Service "
+        + get_app_version()
+        + " ===================="
+    )
     init()
     print("============================ RUN ===========================")
     print("App running : http://localhost:{}".format(PORT))
