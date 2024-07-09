@@ -103,8 +103,8 @@ def get_algorithms():
             "id": "MultiplyLists",
             "name": "Multiply two lists of numbers",
             # Multi-line description:
-            "description": """Multiply two lists of numbers, 
-the two lists must have the same length, 
+            "description": """Multiply two lists of numbers,
+the two lists must have the same length,
 the result will be a list of the same length as the two input lists""",
             "author": "DebiAI",
             "version": "1.0.0",
@@ -153,7 +153,8 @@ the result will be a list of the same length as the two input lists""",
             "outputs": [
                 {
                     "name": "concatenated string",
-                    "description": "concatenated string, with a space between the two strings",
+                    "description": """concatenated string, with a
+space between the two strings""",
                     "type": "string",
                 }
             ],

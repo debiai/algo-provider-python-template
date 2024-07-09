@@ -24,7 +24,8 @@ def addition(inputs):
     b = get_input_from_inputs(inputs, "b", "number")
     # The get_input_from_inputs function will check that the inputs are valid
     # It will raise a TypeError exception if the input is not valid
-    # The exception will be catched by the algorithms.py file and will return a 400 error
+    # The exception will be caught by the algorithms.py file
+    # and will return a 400 error
 
     return [
         {

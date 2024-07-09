@@ -1,7 +1,7 @@
 # ===================================================
 # This project is a ready to fill template for an algo-provider service.
 # This service follows the Algo API standard.
-# More informations in the algo-api/README.md file.
+# More information in the algo-api/README.md file.
 #
 # Define your algorithms inputs and outputs,
 # and the algorithm itself in the algorithms/algorithms.py file.
