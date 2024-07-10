@@ -11,7 +11,7 @@ It exposes some simple addition and multiplication algorithms as an example.
 
 ## Algo API
 
-To make your algorithm compatible with DebiAI, you need to follow the Algo API standard, more informations on [the Algo API here](./algo-api/README.md).
+To make your algorithm compatible with DebiAI, you need to follow the Algo API standard, more information on [the Algo API here](./algo-api/README.md).
 
 This template is already compatible with the Algo API and is ready to be used.
 
@@ -47,11 +47,11 @@ To add elements to the config file, you will need to add them in the config/conf
 
 This template comes with some tests to help you to make sure that your service is compliant with the API.
 
-The tests will try to test the diffent algorithms provided by the service by looking at their inputs and outputs and by trying to run them with fake data.
+The tests will try to test the different algorithms provided by the service by looking at their inputs and outputs and by trying to run them with fake data.
 
 Those tests are not exhaustive and are only here to help you to make sure that your service is compliant with the API spec.
 
-The tests won't be able to test the real behaviour of your algorithms, they will only test the inputs and outputs of your algorithms.
+The tests won't be able to test the real behavior of your algorithms, they will only test the inputs and outputs of your algorithms.
 
 [MORE INFO ON THE TESTS HERE](tests/README.md)
 

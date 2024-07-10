@@ -1,5 +1,6 @@
 from configparser import ConfigParser
-import os, json
+import os
+import json
 
 
 config_path = "config/config.ini"

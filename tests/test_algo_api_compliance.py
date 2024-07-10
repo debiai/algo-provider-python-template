@@ -1,14 +1,14 @@
 # This template comes with some tests to help you to make sure
 # that your service is compliant with the Algo API spec.
 
-# The tests will try to test the diffent algorithms provided by the
+# The tests will try to test the different algorithms provided by the
 # service by looking at their inputs and outputs and by trying to
 # run them with fake data.
 
 # Those tests are not exhaustive and are only here to help you to
 # make sure that your service is compliant with the Algo API spec.
 
-# The tests won't be able to test the real behaviour of your algorithms,
+# The tests won't be able to test the real behavior of your algorithms,
 # they will only test the inputs and outputs of your algorithms.
 
 import requests

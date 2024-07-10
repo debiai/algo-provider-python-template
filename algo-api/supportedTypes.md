@@ -10,7 +10,7 @@ The Algo API supports the following types for the inputs and outputs:
 }
 ```
 
-You can specify those optionnal parameters:
+You can specify those optional parameters:
 
 ```json
 {
@@ -28,7 +28,7 @@ You can specify those optionnal parameters:
 }
 ```
 
-You can specify those optionnal parameters:
+You can specify those optional parameters:
 
 ```json
 {
@@ -48,7 +48,7 @@ You can specify those optionnal parameters:
 }
 ```
 
-You can specify an optionnal default value:
+You can specify an optional default value:
 
 ```json
 {
@@ -73,7 +73,7 @@ The available types are:
 }
 ```
 
-You can specify those optionnal parameters:
+You can specify those optional parameters:
 
 ```json
 {

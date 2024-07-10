@@ -2,7 +2,7 @@
 
 ## Context
 
-An algo-provider is a service that allow projets members to create and run algorithms with DebiAI. The API allows users to interact with a large number and variety of algorithms, and to make their own algorithms available.
+An algo-provider is a service that allow projects members to create and run algorithms with DebiAI. The API allows users to interact with a large number and variety of algorithms, and to make their own algorithms available.
 
 ## Getting started
 
@@ -123,7 +123,7 @@ The outputs need to follow the algorithm's outputs specified in the [GET /algori
 
 ### Defining the algorithm
 
-If you want to make available for example a simple moving avegare calculation algorithm, you will need to specify the following:
+If you want to make available for example a simple moving average calculation algorithm, you will need to specify the following:
 
 - The algorithm's `name`
 - The algorithm's `description`
@@ -140,7 +140,7 @@ In the case of the moving average algorithm, the `inputs` can be the following:
   - The type of the input: `array`
   - The description of the input: `The data to calculate the moving average on.`
 
-- Optionaly, a parameter (the number of periods for exemple):
+- Optionally, a parameter (the number of periods for example):
   - The name of the input: `periods`
   - The type of the input: `integer`
   - The description of the input: `The number of periods to calculate the moving average on.`
@@ -203,8 +203,8 @@ This will make the algorithm easily available to the program with the other algo
 #### Post /algorithms/{id}
 
 The `id` of the algorithm is the same as the `id` you specified in the `GET /algorithms` endpoint.
-You will recieve an input that correspond to the `inputs` you specified in the `GET /algorithms` endpoint.
-In the case of the moving average algorithm, you will recieve an input in the following format:
+You will receive an input that correspond to the `inputs` you specified in the `GET /algorithms` endpoint.
+In the case of the moving average algorithm, you will receive an input in the following format:
 
 ```json
 {
