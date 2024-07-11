@@ -7,15 +7,15 @@ def validate_object(obj, object_type, image_index, object_index):
 
     for key in required_keys:
         if key not in obj:
-            raise ValueError(
-                f"The {object_type} object {object_index} in image {image_index}\
+            raise TypeError(
+                f"The {object_type} object {object_index} in image {image_index} \
  has no {key}"
             )
 
     for key in coordinate_keys:
         if key not in obj["coordinates"]:
-            raise ValueError(
-                f"The {object_type} object {object_index} in image {image_index}\
+            raise TypeError(
+                f"The {object_type} object {object_index} in image {image_index} \
 has no {key} coordinate"
             )
 
@@ -74,7 +74,7 @@ def objects_detection_metrics(inputs):
 
     # Check that the two lists have the same length
     if len(images_ground_truth) != len(objects_predicted):
-        raise ValueError("The two lists must have the same length")
+        raise TypeError("The two lists must have the same length")
 
     # Validate images_ground_truth
     for i, image in enumerate(images_ground_truth):
@@ -105,4 +105,4 @@ def objects_detection_metrics(inputs):
         f1 = 2 * (precision * recall) / (precision + recall)
         results.append({"precision": precision, "recall": recall, "f1": f1})
 
-    return results
+    return [{"name": "results", "value": results}]

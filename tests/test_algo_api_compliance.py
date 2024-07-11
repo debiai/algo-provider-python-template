@@ -14,11 +14,15 @@
 import requests
 import json
 
+from algorithms_specific_tests import objectDetectionMetricsTests
+
 appUrl = "http://localhost:3020/"
 
 algorithms = []
 
-# ============== PROJECTS =================
+ALGORITHMS_SPECIFIC_TESTS = {
+    "ObjectsDetectionMetrics": objectDetectionMetricsTests.test_object_detection_metrics_algorithm  # noqa
+}
 
 
 def test_get_algorithms():
@@ -41,6 +45,11 @@ def test_get_algorithms():
 def test_run_algorithm():
     for algorithm in algorithms:
         print("Testing algorithm: " + algorithm["id"])
+
+        if algorithm["id"] in ALGORITHMS_SPECIFIC_TESTS:
+            ALGORITHMS_SPECIFIC_TESTS[algorithm["id"]](appUrl)
+            continue
+
         url = appUrl + "algorithms/" + algorithm["id"] + "/run"
 
         # Create fake inputs
