@@ -180,6 +180,7 @@ space between the two strings""",
             "id": "ObjectsDetectionMetrics",
             "version": "1.0.0",
             "author": "DebiAI",
+            "tags": ["object detection", "metrics"],
             "description": """Calculate the precision, recall and F1 score
 of an object detection algorithm. It takes as input two list of list of
 objects with the following format:
@@ -194,7 +195,7 @@ objects with the following format:
     }
 }]]
 
-One list of ground truth objects and one list of predicted objects. 
+One list of ground truth objects and one list of predicted objects.
 The two lists must have the same length (one list of object per image).
 
 Output example:
