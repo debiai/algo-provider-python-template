@@ -234,7 +234,7 @@ Output example:
     # You can add as many algorithms as you want
     # You can also build the algorithms list dynamically
     # You can for example fill the "availableValues" field depending
-    # of what is available in a database such as a list of models,
+    # on what is available in a database such as a list of models,
     # or create one algorithm for each model in a list of models
 
     # For more information about the algorithm format, see the Algo API documentation:
