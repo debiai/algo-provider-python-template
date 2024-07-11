@@ -276,6 +276,8 @@ components:
                 - string
                 - number
                 - boolean
+                - dict
+                - array
 
             lengthMin:
               type: number

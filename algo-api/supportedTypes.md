@@ -65,6 +65,8 @@ The available types are:
 - string
 - number
 - boolean
+- dict
+- array
 
 ```json
 {

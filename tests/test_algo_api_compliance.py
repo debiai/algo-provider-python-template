@@ -66,6 +66,14 @@ def test_run_algorithm():
                         input["value"] = ["a", "b", "c", "d", "e"]
                     elif input_spec["arrayType"] == "boolean":
                         input["value"] = [True, False, True, False, True]
+                    elif input_spec["arrayType"] == "object":
+                        input["value"] = [{"a": 1}, {"b": 2}, {"c": 3}]
+                    elif input_spec["arrayType"] == "array":
+                        input["value"] = [[1, 2], [3, 4], [5, 6]]
+                    else:
+                        input["value"] = [1, 2, 3, 4, 5]
+                else:
+                    input["value"] = "test"
 
             inputs.append(input)
 
