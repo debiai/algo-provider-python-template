@@ -1,4 +1,11 @@
-from .myAlgorithms import addition, statistics_of_list, multiply_lists, add_strings
+from .myAlgorithms import (
+    addition,
+    statistics_of_list,
+    multiply_lists,
+    add_strings,
+)
+
+from .objectDetectionMetrics import objects_detection_metrics
 
 
 # This is the controller of the service,
@@ -17,7 +24,7 @@ def get_algorithms():
         list: List of algorithms
     """
 
-    # This template service exposes tree simples algorithms:
+    # This template service exposes 4 simples algorithms:
     # 1- Addition: Addition of two numbers
     #   - Input: Two numbers
     #   - Output: a number, the sum of the two input numbers
@@ -28,11 +35,20 @@ def get_algorithms():
     # 3- MultiplyLists:
     #   - Input: Two lists of numbers
     #   - Output: a list of numbers, the multiplication of the two input lists
+    # 4- addStrings:
+    #   - Input: Two strings
+    #   - Output: a string, the concatenation of the two input strings
+
+    # A fifth algorithm is added to show how to handle advanced data structures
+    # 5- ObjectsDetectionMetrics:
+    #   - Input: Two lists of list of objects (dicts),
+    #     one for the ground truth and one for the predicted objects
+    #   - Output: a list of dict, the precision, recall and F1 score
 
     # We define the algorithms as a list of dictionaries:
 
     algorithms = [
-        # Algorithm 1: Addition
+        # Algorithm 1: Addition of two numbers
         {
             "id": "Addition",
             "name": "Addition of two numbers",
@@ -67,7 +83,7 @@ def get_algorithms():
                 }
             ],
         },
-        # Algorithm 2: StatisticsOfList
+        # Algorithm 2: Statistics of a list of numbers
         {
             "id": "StatisticsOfList",
             "name": "Statistics of a list of numbers",
@@ -98,7 +114,7 @@ def get_algorithms():
                 },
             ],
         },
-        # Algorithm 3: MultiplyLists
+        # Algorithm 3: Multiply two lists of numbers
         {
             "id": "MultiplyLists",
             "name": "Multiply two lists of numbers",
@@ -135,7 +151,7 @@ the result will be a list of the same length as the two input lists""",
                 }
             ],
         },
-        # Algorithm 4: concatenate strings
+        # Algorithm 4: Concatenate strings
         {
             "id": "addStrings",
             "version": "1.0.0",
@@ -159,17 +175,81 @@ space between the two strings""",
                 }
             ],
         },
+        # Algorithm 5: Objects detection metrics
+        {
+            "id": "ObjectsDetectionMetrics",
+            "version": "1.0.0",
+            "author": "DebiAI",
+            "tags": ["object detection", "metrics"],
+            "description": """Calculate the precision, recall and F1 score
+of an object detection algorithm. It takes as input two list of list of
+objects with the following format:
+
+[[{
+    "class": "class_name",
+    "coordinates": {
+        "x": 0,
+        "y": 0,
+        "w": 100,
+        "h": 100,
+    }
+}]]
+
+One list of ground truth objects and one list of predicted objects.
+The two lists must have the same length (one list of object per image).
+
+Output example:
+[{
+    "precision": 0.5,
+    "recall": 0.5,
+    "f1": 0.5
+}]
+
+""",
+            "inputs": [
+                {
+                    "name": "images_objects_ground_truth",
+                    "description": "List of list of annotated objects, one per image",
+                    "type": "array",
+                    "arrayType": "array",
+                },
+                {
+                    "name": "images_objects_predicted",
+                    "description": "List of list of predicted objects, one per image",
+                    "type": "array",
+                    "arrayType": "array",
+                },
+            ],
+            "outputs": [
+                {
+                    "name": "results",
+                    "description": "Precision, recall and F1 score.",
+                    "type": "array",
+                    "arrayType": "dict",
+                }
+            ],
+        },
     ]
 
-    # Keep in mind that you can add as many algorithms as you want
-    # and that you can build the algorithms list dynamically
+    # You can add as many algorithms as you want
+    # You can also build the algorithms list dynamically
     # You can for example fill the "availableValues" field depending
-    # of what is available in a database such as a list of models
+    # on what is available in a database such as a list of models,
+    # or create one algorithm for each model in a list of models
 
     # For more information about the algorithm format, see the Algo API documentation:
     # algo-api/README.md
 
     return algorithms, 200
+
+
+ALGORITHM_FUNCTIONS = {
+    "Addition": addition,
+    "StatisticsOfList": statistics_of_list,
+    "MultiplyLists": multiply_lists,
+    "addStrings": add_strings,
+    "ObjectsDetectionMetrics": objects_detection_metrics,
+}
 
 
 def use_algorithm(algorithmId, body):
@@ -185,18 +265,13 @@ def use_algorithm(algorithmId, body):
 
     algorithm_inputs = body["inputs"]
 
+    if algorithmId not in ALGORITHM_FUNCTIONS:
+        print("Algorithm {} not found".format(algorithmId))
+        return "Algorithm not found", 404
+
     try:
         # We call the algorithm based on its ID
-        if algorithmId == "Addition":
-            return addition(algorithm_inputs)
-        elif algorithmId == "StatisticsOfList":
-            return statistics_of_list(algorithm_inputs)
-        elif algorithmId == "MultiplyLists":
-            return multiply_lists(algorithm_inputs)
-        elif algorithmId == "addStrings":
-            return add_strings(algorithm_inputs)
-
-        # Add as many algorithms as you want
+        return ALGORITHM_FUNCTIONS[algorithmId](algorithm_inputs)
 
     except TypeError as e:
         # The algorithm was called with invalid inputs
@@ -205,6 +280,3 @@ def use_algorithm(algorithmId, body):
         )
         print(error_message)
         return error_message, 400
-
-    print("Algorithm {} not found".format(algorithmId))
-    return "Algorithm not found", 404

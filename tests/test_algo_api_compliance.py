@@ -14,11 +14,15 @@
 import requests
 import json
 
+from algorithms_specific_tests import objectDetectionMetricsTests
+
 appUrl = "http://localhost:3020/"
 
 algorithms = []
 
-# ============== PROJECTS =================
+ALGORITHMS_SPECIFIC_TESTS = {
+    "ObjectsDetectionMetrics": objectDetectionMetricsTests.test_object_detection_metrics_algorithm  # noqa
+}
 
 
 def test_get_algorithms():
@@ -41,6 +45,11 @@ def test_get_algorithms():
 def test_run_algorithm():
     for algorithm in algorithms:
         print("Testing algorithm: " + algorithm["id"])
+
+        if algorithm["id"] in ALGORITHMS_SPECIFIC_TESTS:
+            ALGORITHMS_SPECIFIC_TESTS[algorithm["id"]](appUrl)
+            continue
+
         url = appUrl + "algorithms/" + algorithm["id"] + "/run"
 
         # Create fake inputs
@@ -66,6 +75,16 @@ def test_run_algorithm():
                         input["value"] = ["a", "b", "c", "d", "e"]
                     elif input_spec["arrayType"] == "boolean":
                         input["value"] = [True, False, True, False, True]
+                    elif input_spec["arrayType"] == "dict":
+                        input["value"] = [{"a": 1}, {"b": 2}, {"c": 3}]
+                    elif input_spec["arrayType"] == "array":
+                        input["value"] = [[1, 2], [3, 4], [5, 6]]
+                    else:
+                        input["value"] = [1, 2, 3, 4, 5]
+                elif input_spec["type"] == "dict":
+                    input["value"] = {"a": 1, "b": 2, "c": 3}
+                else:
+                    input["value"] = "test"
 
             inputs.append(input)
 

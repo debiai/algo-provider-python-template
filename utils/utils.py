@@ -68,6 +68,22 @@ def get_input_from_inputs(
                                     input_name, type(value)
                                 )
                             )
+                elif expected_list_type == "object":
+                    for value in input["value"]:
+                        if not isinstance(value, dict):
+                            raise TypeError(
+                                "Input {} is not an array of objects but of {}".format(
+                                    input_name, type(value)
+                                )
+                            )
+                elif expected_list_type == "array":
+                    for value in input["value"]:
+                        if not isinstance(value, list):
+                            raise TypeError(
+                                "Input {} is not an array of arrays but of {}".format(
+                                    input_name, type(value)
+                                )
+                            )
 
             # Return the value
             return input["value"]
