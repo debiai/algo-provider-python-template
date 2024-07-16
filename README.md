@@ -1,13 +1,8 @@
 # Algo-provider Python template
 
-<div align="center" style="background:white; border-radius:20px">
-  <img src="logo.png" width="200" height="200">
-</div>
-<br>
+[DebiAI](https://debiai.irt-systemx.fr/) supports [custom algorithms](https://debiai.irt-systemx.fr/dashboard/algoProviders/) through the use of Algo-providers.
 
-This project is a ready to fill algo-provider template
-
-It exposes some simple addition and multiplication algorithms as an example.
+This project is a ready to fill algo-provider template, it exposes some simple algorithms as an example.
 
 ## Algo API
 
