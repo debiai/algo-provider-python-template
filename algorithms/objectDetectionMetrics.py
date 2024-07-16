@@ -29,8 +29,8 @@ def object_is_in_list(obj, obj_list):
 
 def objects_detection_metrics(inputs):
     # Expected inputs:
-    # {
-    #     "name": "images_ground_truth",
+    # [{
+    #     "name": "images_objects_ground_truth",
     #     "value": [
     #         [
     #             {
@@ -39,9 +39,9 @@ def objects_detection_metrics(inputs):
     #             }
     #         ]
     #     ],
-    # }
+    # },
     # {
-    #     "name": "images_ground_truth",
+    #     "name": "images_objects_predicted",
     #     "value": [
     #         [
     #             {
@@ -50,7 +50,7 @@ def objects_detection_metrics(inputs):
     #             }
     #         ]
     #     ],
-    # }
+    # }]
 
     # Expected outputs:
     # {
