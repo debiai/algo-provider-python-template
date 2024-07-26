@@ -20,10 +20,20 @@ from utils.utils import get_app_version
 PORT = 3020
 OPEN_API_PATH = "algo-api/OpenAPI/Algo_OpenAPI_V0.yaml"
 
+# Version of the service, will be pulled by the GitHub workflow
+# to tag the Docker image
+VERSION = "1.0.0"
+
 # Setup app
 app = connexion.App(__name__)
 app.add_api(OPEN_API_PATH, strict_validation=True)
 CORS(app.app)
+
+
+@app.route("/", methods=["GET"])
+def version():
+    return "Algo provider service version: " + get_app_version()
+
 
 if __name__ == "__main__":
     # Run the service
