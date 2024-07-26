@@ -27,6 +27,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Display
+        id: display
+        run: ls
+
+      - name: Display version
+        id: display_version
+        run: echo "VERSION=$(grep 'VERSION' websrv.py | cut -d '"' -f2)"
+
       - name: Get version
         id: get_version
         run: echo "VERSION=$(grep 'VERSION' websrv.py | cut -d '"' -f2)" >> $GITHUB_ENV
