@@ -100,9 +100,18 @@ def objects_detection_metrics(inputs):
         for obj in objects_predicted[i]:
             if not object_is_in_list(obj, image):
                 fp += 1
-        precision = tp / (tp + fp)
-        recall = tp / (tp + fn)
-        f1 = 2 * (precision * recall) / (precision + recall)
+        if tp + fp == 0:
+            precision = 0
+        else:
+            precision = tp / (tp + fp)
+        if tp + fn == 0:
+            recall = 0
+        else:
+            recall = tp / (tp + fn)
+        if precision + recall == 0:
+            f1 = 0
+        else:
+            f1 = 2 * (precision * recall) / (precision + recall)
         results.append({"precision": precision, "recall": recall, "f1": f1})
 
     return [{"name": "results", "value": results}]
