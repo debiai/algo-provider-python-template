@@ -6,6 +6,7 @@ from .myAlgorithms import (
 )
 
 from .objectDetectionMetrics import objects_detection_metrics
+from .metrics import object_detection_metrics
 
 
 # This is the controller of the service,
@@ -229,6 +230,48 @@ Output example:
                 }
             ],
         },
+
+        # Algorithm 6: 2D Object Detection Metrics
+        {
+            "id": "2DObjectDetectionMetrics",
+            "version": "1.0.0",
+            "author": "DebiAI",
+            "tags": [" 2D Object Detection", "Metrics"],
+            "description": """ xxx """,
+            "inputs": [
+                {
+                    "name": "ground_truths",
+                    "description": "",
+                    "type": "array",
+                    "arrayType": "object",
+                },
+                {
+                    "name": "detections",
+                    "description": "",
+                    "type": "array",
+                    "arrayType": "object",
+                },
+                {
+                    "name": "classes",
+                    "description": " ",
+                    "type": "array",
+                    "arrayType": "string"
+                },
+                {
+                    "name": "iou_threshold",
+                    "description": " ",
+                    "type": "number"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "results",
+                    "description": "",
+                    "type": "array",
+                    "arrayType": "object",
+                }
+            ],
+        },
     ]
 
     # You can add as many algorithms as you want
@@ -249,6 +292,7 @@ ALGORITHM_FUNCTIONS = {
     "MultiplyLists": multiply_lists,
     "addStrings": add_strings,
     "ObjectsDetectionMetrics": objects_detection_metrics,
+    "2DObjectDetectionMetrics": object_detection_metrics
 }
 
 
